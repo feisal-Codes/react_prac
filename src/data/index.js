@@ -567,5 +567,87 @@ const users = [
     registrationDate: "2023-08-27",
   },
 ];
+const booksData = [
+  {
+    id: 1,
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    genre: "Classic",
+    publicationYear: 1925,
+    rating: 4.2,
+  },
+  {
+    id: 2,
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    genre: "Fiction",
+    publicationYear: 1960,
+    rating: 4.5,
+  },
+  {
+    id: 3,
+    title: "1984",
+    author: "George Orwell",
+    genre: "Dystopian",
+    publicationYear: 1949,
+    rating: 4.0,
+  },
+  {
+    id: 4,
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    genre: "Fantasy",
+    publicationYear: 1937,
+    rating: 4.8,
+  },
+  {
+    id: 5,
+    title: "Harry Potter and the Sorcerer's Stone",
+    author: "J.K. Rowling",
+    genre: "Fantasy",
+    publicationYear: 1997,
+    rating: 4.7,
+  },
+  {
+    id: 6,
+    title: "The Catcher in the Rye",
+    author: "J.D. Salinger",
+    genre: "Fiction",
+    publicationYear: 1951,
+    rating: 4.1,
+  },
+  {
+    id: 7,
+    title: "The Lord of the Rings",
+    author: "J.R.R. Tolkien",
+    genre: "Fantasy",
+    publicationYear: 1954,
+    rating: 4.6,
+  },
+  {
+    id: 8,
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    genre: "Classic",
+    publicationYear: 1813,
+    rating: 4.3,
+  },
+  {
+    id: 9,
+    title: "Brave New World",
+    author: "Aldous Huxley",
+    genre: "Dystopian",
+    publicationYear: 1932,
+    rating: 4.0,
+  },
+  {
+    id: 10,
+    title: "The Hunger Games",
+    author: "Suzanne Collins",
+    genre: "Dystopian",
+    publicationYear: 2008,
+    rating: 4.2,
+  },
+];
 
-module.exports = { products, tasks, recipes, movies, users };
+module.exports = { products, tasks, recipes, movies, users, booksData };

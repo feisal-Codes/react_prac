@@ -1,6 +1,6 @@
 // import "./styles.css";
 import { useState } from "react";
-import { tasks, recipes, movies, users } from "./data";
+import { tasks, recipes, movies, users, booksData } from "./data";
 // import "./styles.css"
 
 // //kanban board
@@ -21,6 +21,8 @@ import RecipeManagement from "./recipes/recipe";
 import MultiStepForms from "./multiStepForms/form";
 import Movies from "./movies";
 import UserManagement from "./userManagement";
+import Books from "./roadToLearnReactBook/reactFundamentals/filter";
+import Form from "./roadToLearnReactBook/reactFundamentals/form";
 
 // const Tasks = [
 //   { id: 1, name: "Buy groceries", completed: false },
@@ -111,7 +113,9 @@ function App() {
       {/* <RecipeManagement data={recipes} /> */}
       {/* <MultiStepForms /> */}
       {/* <Movies movies={movies} /> */}
-      <UserManagement users={users} />
+      {/* <UserManagement users={users} /> */}
+      {/* <Books data={booksData} /> */}
+      <Form />
     </>
   );
 }
