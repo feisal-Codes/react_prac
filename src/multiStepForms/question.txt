@@ -1,0 +1,65 @@
+You are tasked with building a multi-step form wizard component for a complex registration process. The form should guide users through multiple steps, validate their input, and allow them to go back and forth between steps. This challenge involves managing form state, navigation, and conditional rendering.
+
+Requirements:
+
+User Interface:
+
+Create a user interface that displays a
+multi-step form.
+Each step of the form should have its own 
+set of fields, with next and previous buttons for
+ navigation.
+Implement a progress indicator that shows the 
+current step and overall progress.
+State Management:
+
+Use React state to manage the form's data, 
+including user input for each step.
+Define a data structure to hold the
+form's state, with fields for each step.
+Validation and Error Handling:
+
+Implement validation for each step's fields.
+Show error messages when the user enters invalid data.
+Ensure that the user cannot proceed to the 
+next step until the current step's data is valid.
+Allow users to go back to previous steps 
+and edit their input.
+Navigation:
+
+Implement next and previous buttons 
+for navigating between steps.
+Disable the next button until 
+the current step's data is valid.
+Allow users to review and edit 
+their input on previous steps.
+Progress Indicator:
+
+Display a progress indicator that
+shows the current step and overall 
+progress in the form.
+Highlight the current step and 
+indicate completed steps.
+Submission and Confirmation:
+
+Include a final step for users to 
+review their input before submitting.
+Implement a submission button on the last 
+step that sends the form data to a server (simulated).
+Styling:
+
+Apply CSS styles to make the form wizard visually 
+appealing and user-friendly.
+Ensure that the form is responsive and works on 
+different screen sizes.
+Optional Features (for extra challenge):
+
+Add animations or transitions between steps 
+for a smoother user experience.
+Implement conditional rendering of steps based on 
+user input (e.g., show additional steps if a 
+certain option is selected).
+Include client-side routing to 
+maintain the form state 
+even if the user refreshes the page or 
+navigates away and comes back.

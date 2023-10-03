@@ -1,0 +1,42 @@
+You are tasked with creating a User Management System in React. 
+The system should display a list of users with the following information:
+
+User ID
+Name
+Email
+Role (e.g., Admin, Moderator, User)
+Registration Date
+The system should have the following functionalities:
+
+Display Users:
+
+Display a list of users with their details.
+Initially, show all users.
+Filter Users:
+
+Allow users to filter the displayed users based on their roles (Admin, Moderator, User).
+Allow users to search for a specific user by name or email.
+Sort Users:
+
+Allow users to sort the displayed users based on their registration date.
+Provide an option to sort in ascending or descending order.
+User Details:
+
+Allow users to click on a user to view more details.
+Display additional details for the selected user.
+Add New User:
+
+Allow users to add a new user to the system.
+Capture the necessary details (Name, Email, Role).
+Edit User:
+
+Allow users to edit the details of an existing user.
+Provide a form to modify user information.
+Delete User:
+
+Allow users to delete a user.
+Additional Notes:
+
+Use React state and props effectively to 
+manage the user data and application state.
+Consider creating separate components for different parts of the application (e.g., UserList, UserFilter, UserDetails, etc.).

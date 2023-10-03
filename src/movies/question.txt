@@ -1,0 +1,31 @@
+You are building a movie catalog application using React.js. The application displays a list of movies with the following properties: title, genre, releaseYear, and rating. Your task is to implement a component that allows users to filter, sort, and search for movies.
+
+Filtering:
+
+Users should be able to filter movies 
+based on genres and release years.
+Implement UI controls (e.g., checkboxes 
+and dropdowns) to allow users to choose
+ genres and release years for filtering.
+Sorting:
+
+Users should be able to sort movies based on title, release year, and rating.
+Implement UI controls
+ (e.g., radio buttons or a dropdown)
+  to allow users 
+to choose the sorting criteria.
+Searching:
+
+Users should be able to search for movies
+ based on the title.
+Implement a 
+search input that filters movies based on the entered title.
+Display:
+
+Display the list of movies with their title,
+genre, release year, and rating.
+Bonus:
+
+Implement pagination for the movie list
+ to improve performance when there is a 
+ large number of movie

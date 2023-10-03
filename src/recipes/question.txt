@@ -1,0 +1,32 @@
+Problem: Build a Recipe Management Application
+
+You are tasked with creating a recipe management application
+ in React. 
+ The application should allow users to perform 
+ the following actions:
+
+View a list of recipes, including their names, 
+ingredients, and instructions.
+
+Add new recipes to the list.
+
+Edit existing recipes, including updating their names, 
+ingredients, and instructions.
+
+Delete recipes.
+
+Search for recipes by name or ingredients.
+
+Filter recipes by specific criteria 
+(e.g., vegetarian, gluten-free).
+
+Sort recipes by name or rating.
+
+Rate recipes on a scale of 1 to 5 stars.
+
+Your task is to design the React components and 
+implement the logic to build this recipe management
+ application. Each recipe should be represented as an object 
+ with properties like name, ingredients (an array), instructions,
+ and rating. Ensure that you efficiently manage and 
+ manipulate the recipes data based on user interactions
