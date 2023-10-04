@@ -23,6 +23,7 @@ import Movies from "./movies";
 import UserManagement from "./userManagement";
 import Books from "./roadToLearnReactBook/reactFundamentals/filter";
 import Form from "./roadToLearnReactBook/reactFundamentals/form";
+import Fundamentals from "./roadToLearnReactBook/reactFundamentals";
 
 // const Tasks = [
 //   { id: 1, name: "Buy groceries", completed: false },
@@ -115,7 +116,8 @@ function App() {
       <Movies movies={movies} />
       <UserManagement users={users} />
       <Books data={booksData} /> */}
-      <Form />
+      {/* <Form /> */}
+      <Fundamentals />
     </>
   );
 }
