@@ -1,9 +1,11 @@
+import Count from "./count";
 import EventBubbling from "./eventBubbling";
 
 const Fundamentals = () => {
   return (
     <>
-      <EventBubbling />
+      {/* <EventBubbling /> */}
+      <Count />
     </>
   );
 };
