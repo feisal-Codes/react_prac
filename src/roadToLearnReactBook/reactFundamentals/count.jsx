@@ -8,7 +8,6 @@ const Count = () => {
     console.log("here");
   };
   const ref = useClickOutSide(handleClickOutside);
-
   const handleButtonClick = () => {
     setCount((prev) => prev + 1);
   };
