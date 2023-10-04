@@ -50,7 +50,6 @@ const useFormValidation = (initialFields, initialerrors) => {
     }));
     validate();
   };
-  //   console.log(values);
   return [values, errors, handleChange, handleSubmit];
 };
 

@@ -110,11 +110,11 @@ import Form from "./roadToLearnReactBook/reactFundamentals/form";
 function App() {
   return (
     <>
-      {/* <RecipeManagement data={recipes} /> */}
-      {/* <MultiStepForms /> */}
-      {/* <Movies movies={movies} /> */}
-      {/* <UserManagement users={users} /> */}
-      {/* <Books data={booksData} /> */}
+      {/* <RecipeManagement data={recipes} />
+      <MultiStepForms />
+      <Movies movies={movies} />
+      <UserManagement users={users} />
+      <Books data={booksData} /> */}
       <Form />
     </>
   );
