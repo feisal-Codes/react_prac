@@ -42,7 +42,7 @@ const Table = ({ initialData }) => {
         };
       }
       case deleteItem: {
-        return state.filter((item) => item.id !== action.payload);
+        return state?.items.filter((item) => item.id !== action.payload);
       }
 
       case setError: {
