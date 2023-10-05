@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import "./table.css";
 const Table = ({ initialData }) => {
   /**
@@ -8,9 +8,15 @@ const Table = ({ initialData }) => {
    *
    *
    */
+
+  const deleteItem = "DELETE_ITEM";
+  const setItems = "SET_ITEMS";
   const reducer = (state, action) => {
     switch (action.type) {
-      case "DELETE_ITEM": {
+      case setItems: {
+        return action.payload;
+      }
+      case deleteItem: {
         return state.filter((item) => item.id !== action.payload);
       }
       default: {
@@ -19,7 +25,11 @@ const Table = ({ initialData }) => {
     }
   };
 
-  const [state, dispatcher] = useReducer(reducer, initialData);
+  useEffect(() => {
+    dispatcher({ type: setItems, payload: initialData });
+  }, []);
+
+  const [state, dispatcher] = useReducer(reducer, []);
 
   const handleClick = (id) => {
     console.log("the id is here", id);
@@ -38,7 +48,7 @@ const Table = ({ initialData }) => {
           </tr>
         </thead>
         <tbody>
-          {state.map((item) => (
+          {state?.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.name}</td>
