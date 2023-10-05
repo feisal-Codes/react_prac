@@ -6,6 +6,10 @@ const Table = ({ initialData }) => {
    * and an action, it computes and returns a new state based on
    * the state and action
    *
+   * if you have one state transiton , use useState hook ,
+   * if you have more than  one state transition on related data
+   *  or same domain use useReducer hook
+   *
    *
    */
 
