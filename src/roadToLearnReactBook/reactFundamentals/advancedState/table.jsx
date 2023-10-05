@@ -15,13 +15,42 @@ const Table = ({ initialData }) => {
 
   const deleteItem = "DELETE_ITEM";
   const setItems = "SET_ITEMS";
+  const setInitialLoading = "SET_INIT_LOADING";
+  const setError = "FETCHING_ERROR";
+
+  const getAsyncItems = () =>
+    // new Promise((resolve, reject) => setTimeout(reject, 2000));
+    new Promise((resolve) =>
+      setTimeout(() => resolve({ data: { items: initialData } }), 2000)
+    );
+
   const reducer = (state, action) => {
     switch (action.type) {
+      case setInitialLoading: {
+        return {
+          ...state,
+          isLoading: true,
+        };
+      }
+
       case setItems: {
-        return action.payload;
+        return {
+          ...state,
+          isLoading: false,
+          isError: false,
+          items: action.payload,
+        };
       }
       case deleteItem: {
         return state.filter((item) => item.id !== action.payload);
+      }
+
+      case setError: {
+        return {
+          ...state,
+          isError: true,
+          isLoading: false,
+        };
       }
       default: {
         return state;
@@ -29,11 +58,22 @@ const Table = ({ initialData }) => {
     }
   };
 
-  useEffect(() => {
-    dispatcher({ type: setItems, payload: initialData });
-  }, []);
+  const [state, dispatcher] = useReducer(reducer, {
+    items: [],
+    isLoading: false,
+    isError: false,
+  });
 
-  const [state, dispatcher] = useReducer(reducer, []);
+  useEffect(() => {
+    dispatcher({ type: setInitialLoading, payload: true });
+    getAsyncItems()
+      .then((result) => {
+        dispatcher({ type: setItems, payload: result.data.items });
+      })
+      .catch((e) => {
+        dispatcher({ type: setError, payload: true });
+      });
+  }, []);
 
   const handleClick = (id) => {
     console.log("the id is here", id);
@@ -42,34 +82,39 @@ const Table = ({ initialData }) => {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state?.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.quantity}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleClick(item.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+      {state.isError && <h2>Failed to fetch</h2>}
+      {state.isLoading ? (
+        <h2>data loading</h2>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {state.items?.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.quantity}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      handleClick(item.id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 };
