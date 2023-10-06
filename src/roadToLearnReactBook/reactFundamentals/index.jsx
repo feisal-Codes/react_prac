@@ -10,6 +10,7 @@ import Table from "./advancedState/table";
 import Count from "./count";
 import EventBubbling from "./eventBubbling";
 import GenericComponents from "./genericComponents";
+import HackerStories from "./hackerStrories";
 const initialData = [
   { id: 1, name: "Product A", quantity: 20 },
   { id: 2, name: "Product B", quantity: 15 },
@@ -35,7 +36,9 @@ const Fundamentals = () => {
       <EnhancedD /> */}
 
       {/* <Auth /> */}
-      <Table initialData={initialData} />
+      {/* <Table initialData={initialData} /> */}
+
+      <HackerStories />
     </>
   );
 };
