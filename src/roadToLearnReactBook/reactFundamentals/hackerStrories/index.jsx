@@ -1,8 +1,7 @@
-import { useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import Search from "./components/search";
 import List from "./components/list";
 import useLocalStorage from "./hooks/useLocalStorage";
-let url = "https://hn.algolia.com/api/v1/search?query=story&page=1";
 const SET_STORIES = "SET_STORIES";
 const SET_INIT_LOADING = "SET_INIT_LOADING";
 const SET_FETCH_FAIL = "SET_FETCH_FAIL";
@@ -81,10 +80,33 @@ const HackerStories = () => {
     }
   };
 
+  const handleFetchStories = useCallback(() => {
+    if (!searchTerm) {
+      console.log("here");
+      return;
+    }
+    storiesDispatcher({
+      type: SET_INIT_LOADING,
+      payload: true,
+    });
+    clearTimeout(timeOutId);
+
+    let newTimeOutId = setTimeout(() => {
+      fetchData();
+    }, 200);
+    if (newTimeOutId) {
+      setTimeOutId(newTimeOutId);
+    }
+  }, [searchTerm]);
+
   const handleChange = (e) => {
     let value = e.target.value;
     setSearchTerm(value);
   };
+
+  useEffect(() => {
+    handleFetchStories();
+  }, [handleFetchStories]);
 
   // useEffect(() => {
   //   if (searchTerm === "") return;
@@ -95,35 +117,35 @@ const HackerStories = () => {
   //   fetchData();
   // }, [searchTerm]);
 
-  useEffect(() => {
-    if (!searchTerm) {
-      return;
-    }
-    storiesDispatcher({
-      type: SET_INIT_LOADING,
-      payload: true,
-    });
-    clearTimeout(timeOutId);
+  // useEffect(() => {
+  //   if (!searchTerm) {
+  //     return;
+  //   }
+  //   storiesDispatcher({
+  //     type: SET_INIT_LOADING,
+  //     payload: true,
+  //   });
+  //   clearTimeout(timeOutId);
 
-    let newTimeOutId = setTimeout(() => {
-      // storiesDispatcher({
-      //   type: SEARCH_STORIES,
-      //   payload: searchTerm,
-      // });
-      fetchData();
-    }, 200);
-    if (newTimeOutId) {
-      setTimeOutId(newTimeOutId);
-    }
+  //   let newTimeOutId = setTimeout(() => {
+  //     // storiesDispatcher({
+  //     //   type: SEARCH_STORIES,
+  //     //   payload: searchTerm,
+  //     // });
+  //     fetchData();
+  //   }, 200);
+  //   if (newTimeOutId) {
+  //     setTimeOutId(newTimeOutId);
+  //   }
 
-    // if (searchTerm === "") {
-    //   storiesDispatcher({
-    //     type: "default",
-    //   });
-    // }
+  //   // if (searchTerm === "") {
+  //   //   storiesDispatcher({
+  //   //     type: "default",
+  //   //   });
+  //   // }
 
-    return () => clearTimeout(newTimeOutId);
-  }, [searchTerm]);
+  //   return () => clearTimeout(newTimeOutId);
+  // }, [searchTerm]);
 
   console.log(stories);
   return (
