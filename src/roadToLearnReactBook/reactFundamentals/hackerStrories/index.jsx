@@ -80,6 +80,13 @@ const HackerStories = () => {
     }
   };
 
+  const handleRemoveItem = (item) => {
+    storiesDispatcher({
+      type: SET_REMOVE_STORY,
+      payload: item.id,
+    });
+  };
+
   const handleFetchStories = useCallback(() => {
     if (!searchTerm) {
       console.log("here");
@@ -160,11 +167,7 @@ const HackerStories = () => {
         <h2>Loading stories... </h2>
       ) : (
         <div>
-          <List
-            list={stories.data}
-            storiesDispatcher={storiesDispatcher}
-            actionType={SET_REMOVE_STORY}
-          />
+          <List list={stories.data} onRemoveItem={handleRemoveItem} />
         </div>
       )}
     </div>

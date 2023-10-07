@@ -1,23 +1,20 @@
 import React from "react";
 
-const Item = ({ item, storiesDispatcher, actionType }) => {
-  const handleRemove = (id) => {
-    storiesDispatcher({
-      type: actionType,
-      payload: id,
-    });
-  };
+const Item = ({ item, onRemoveItem }) => {
   return (
-    <div>
-      <h3>{item.title}</h3>
-      <p>
-        <strong>{item.author}</strong>
-      </p>
-      <p>
-        <a>{item.url}</a>
-      </p>
-      <button onClick={() => handleRemove(item.objectID)}>Delete Story</button>
-    </div>
+    <li style={{ display: "flex" }}>
+      <span style={{ width: "40%" }}>
+        <a href={item.url}>{item.title}</a>
+      </span>
+      <span style={{ width: "30%" }}>{item.author}</span>
+      <span style={{ width: "10%" }}>{item.num_comments}</span>
+      <span style={{ width: "10%" }}>{item.points}</span>
+      <span style={{ width: "10%" }}>
+        <button type="button" onClick={() => onRemoveItem(item)}>
+          Dismiss
+        </button>
+      </span>
+    </li>
   );
 };
 
