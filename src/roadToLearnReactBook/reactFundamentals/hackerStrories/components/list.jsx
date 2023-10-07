@@ -24,9 +24,8 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
 );
 
 const List = ({ list, onRemoveItem, onSubmit }) => {
-  const [sortedList, setSortedList] = useState(list)
+  // const [sortedList, setSortedList] = useState(list)
   const [sort, setSort] = useState({ key: "NONE", order: "asc" });
-  console.log(sort);
   const handleSort = (sortKey) => {
     //double click
     if (sort.key === sortKey) {
@@ -94,21 +93,21 @@ const List = ({ list, onRemoveItem, onSubmit }) => {
   //     return list.sort((a, b) => b.points - a.points);
   //   }
   // };
-  // const SORTS = {
-  //   NONE: (list) => list,
-  //   TITLE: (list) => sortBy([...list], sort.key, sort.order),
-  //   AUTHOR: (list) => sortBy([...list], sort.key, sort.order),
-  //   NUM_COMMENTS: (list) => sortBy([...list], sort.key, sort.order),
-  //   POINTS: (list) => sortBy([...list], sort.key, sort.order),
-  // };
+  const SORTS = {
+    NONE: (list) => list,
+    TITLE: (list) => sortBy([...list], sort.key, sort.order),
+    AUTHOR: (list) => sortBy([...list], sort.key, sort.order),
+    NUM_COMMENTS: (list) => sortBy([...list], sort.key, sort.order),
+    POINTS: (list) => sortBy([...list], sort.key, sort.order),
+  };
 
-  // const sortFunction = SORTS[sort.key];
-  // const sortedList = sortFunction([...list]);
+  const sortFunction = SORTS[sort.key];
+  const sortedList = sortFunction([...list]);
 
-  useEffect(() => {
-    let sList = sortBy([...list], sort.key, sort.order)
-    setSortedList(sList)
-  }, [sort, list])
+  // useEffect(() => {
+  //   let sList = sortBy([...list], sort.key, sort.order)
+  //   setSortedList(sList)
+  // }, [sort, list])
 
   return (
     <>
