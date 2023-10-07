@@ -24,10 +24,9 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
 );
 
 const List = ({ list, onRemoveItem, onSubmit }) => {
-  // const [sortedList, setSortedList] = useState(list)
+  const [sortedList, setSortedList] = useState(list)
   const [sort, setSort] = useState({ key: "NONE", order: "asc" });
   const handleSort = (sortKey) => {
-    //double click
     if (sort.key === sortKey) {
       let newOrder = sort.order === "asc" ? "desc" : "asc";
       setSort({ key: sortKey, order: newOrder });
@@ -54,60 +53,12 @@ const List = ({ list, onRemoveItem, onSubmit }) => {
   };
 
 
-  // const sortByTitle = (list, sort) => {
-  //   if (sort.order === "asc") {
-  //     return list.sort((a, b) =>
-  //       a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-  //     );
-  //   } else {
-  //     return list.sort((a, b) =>
-  //       b.title.toLowerCase().localeCompare(a.title.toLowerCase())
-  //     );
-  //   }
-  // };
 
-  // const sortByAuthor = (list, sort) => {
-  //   if (sort.order === "asc") {
-  //     return list.sort((a, b) =>
-  //       a.author.toLowerCase().localeCompare(b.author.toLowerCase())
-  //     );
-  //   } else {
-  //     return list.sort((a, b) =>
-  //       b.author.toLowerCase().localeCompare(a.author.toLowerCase())
-  //     );
-  //   }
-  // };
 
-  // const sortByComments = (list, sort) => {
-  //   if (sort.order === "asc") {
-  //     return list.sort((a, b) => a.num_comments - b.num_comments);
-  //   } else {
-  //     return list.sort((a, b) => b.num_comments - a.num_comments);
-  //   }
-  // };
-
-  // const sortByPoints = (list, SortButton) => {
-  //   if (sort.order === "asc") {
-  //     return list.sort((a, b) => a.points - b.points);
-  //   } else {
-  //     return list.sort((a, b) => b.points - a.points);
-  //   }
-  // };
-  const SORTS = {
-    NONE: (list) => list,
-    TITLE: (list) => sortBy([...list], sort.key, sort.order),
-    AUTHOR: (list) => sortBy([...list], sort.key, sort.order),
-    NUM_COMMENTS: (list) => sortBy([...list], sort.key, sort.order),
-    POINTS: (list) => sortBy([...list], sort.key, sort.order),
-  };
-
-  const sortFunction = SORTS[sort.key];
-  const sortedList = sortFunction([...list]);
-
-  // useEffect(() => {
-  //   let sList = sortBy([...list], sort.key, sort.order)
-  //   setSortedList(sList)
-  // }, [sort, list])
+  useEffect(() => {
+    let newList = sortBy([...list], sort.key, sort.order)
+    setSortedList(newList)
+  }, [sort, list])
 
   return (
     <>
@@ -165,14 +116,7 @@ const List = ({ list, onRemoveItem, onSubmit }) => {
           />
         ))}
       </ul>
-      {/* {list.map((item) => (
-        <Item
-          key={item.objectID}
-          item={item}
-          storiesDispatcher={storiesDispatcher}
-          actionType={actionType}
-        />
-      ))} */}
+
     </>
   );
 };
