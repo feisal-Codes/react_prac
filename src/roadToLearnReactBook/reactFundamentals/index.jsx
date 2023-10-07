@@ -6,7 +6,7 @@ import {
   EnhancedD,
 } from "./HOCs/codeReusability";
 import { Auth } from "./HOCs/crossCuttingConcerns";
-import Table from "./advancedState/table";
+// import Table from "./advancedState/table";
 import Count from "./count";
 import EventBubbling from "./eventBubbling";
 import GenericComponents from "./genericComponents";

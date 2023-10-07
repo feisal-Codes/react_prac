@@ -14,6 +14,7 @@ const HackerStories = () => {
 
   const [timeOutId, setTimeOutId] = useState(null);
   const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
+
   const reducer = (state, action) => {
     switch (action.type) {
       case SET_INIT_LOADING: {

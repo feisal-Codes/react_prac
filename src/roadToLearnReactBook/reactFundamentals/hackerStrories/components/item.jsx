@@ -12,7 +12,11 @@ const Item = ({ item, onRemoveItem }) => {
       </span>
       <span style={{ width: "10%", marginBottom: "5px" }}>{item.points}</span>
       <span style={{ width: "10%", marginBottom: "5px" }}>
-        <button type="button" onClick={() => onRemoveItem(item)}>
+        <button
+          style={{ backgroundColor: "red", border: "none", color: "white" }}
+          type="button"
+          onClick={() => onRemoveItem(item)}
+        >
           Dismiss
         </button>
       </span>
