@@ -75,6 +75,7 @@ const HackerStories = () => {
     }
   };
 
+  //handles sorting of the list 
   const handleSort = (sortKey) => {
     if (sort.key === sortKey) {
       let newOrder = sort.order === "asc" ? "desc" : "asc";
@@ -91,6 +92,7 @@ const HackerStories = () => {
     });
   };
 
+  //utility function for sort
   const sortBy = (list, key, order) => {
     key = key.toLowerCase();
     return list.sort((a, b) => {
@@ -110,6 +112,7 @@ const HackerStories = () => {
       }
     });
   };
+  //sets an effect on stories.data and reloads everytime it changes
 
   useEffect(() => {
     let newList = sortBy([...stories.data], sort.key, sort.order);
