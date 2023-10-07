@@ -13,7 +13,7 @@ const HackerStories = () => {
   const [searchTerm, setSearchTerm] = useLocalStorage("searchTerm", "");
 
   const [timeOutId, setTimeOutId] = useState(null);
-
+  const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
   const reducer = (state, action) => {
     switch (action.type) {
       case SET_INIT_LOADING: {
@@ -66,7 +66,9 @@ const HackerStories = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${API_ENDPOINT}${searchTerm}`);
+      // const response = await fetch(`${API_ENDPOINT}${searchTerm}`);
+      const response = await fetch(url);
+
       const result = await response.json();
       storiesDispatcher({
         type: SET_STORIES,
@@ -81,39 +83,51 @@ const HackerStories = () => {
   };
 
   const handleRemoveItem = (item) => {
+    console.log("****************************8");
     storiesDispatcher({
       type: SET_REMOVE_STORY,
-      payload: item.id,
+      payload: item.objectID,
     });
   };
 
   const handleFetchStories = useCallback(() => {
-    if (!searchTerm) {
-      console.log("here");
-      return;
-    }
+    // if (!searchTerm) {
+    //   console.log("here");
+    //   return;
+    // }
     storiesDispatcher({
       type: SET_INIT_LOADING,
       payload: true,
     });
-    clearTimeout(timeOutId);
 
-    let newTimeOutId = setTimeout(() => {
-      fetchData();
-    }, 200);
-    if (newTimeOutId) {
-      setTimeOutId(newTimeOutId);
-    }
-  }, [searchTerm]);
+    fetchData();
+
+    // clearTimeout(timeOutId);
+
+    // let newTimeOutId = setTimeout(() => {
+    //   fetchData();
+    // }, 200);
+    //refactored to fetching data explicitly
+    //   if (newTimeOutId) {
+    //     setTimeOutId(newTimeOutId);
+    //   }
+    // }, [searchTerm]);
+  }, [url]);
 
   const handleChange = (e) => {
     let value = e.target.value;
     setSearchTerm(value);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   handleFetchStories();
+  // }, [handleFetchStories]);
+
+  const handleSubmit = (e) => {
+    console.log(searchTerm);
     handleFetchStories();
-  }, [handleFetchStories]);
+    e.preventDefault();
+  };
 
   // useEffect(() => {
   //   if (searchTerm === "") return;
@@ -158,7 +172,11 @@ const HackerStories = () => {
   return (
     <div>
       <div>
-        <Search onChange={handleChange} value={searchTerm} />
+        <Search
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          value={searchTerm}
+        />
       </div>
 
       {stories.isError && <h2>Failed to Fetch</h2>}
