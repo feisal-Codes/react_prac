@@ -23,42 +23,12 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
   </span>
 );
 
-const List = ({ list, onRemoveItem, onSubmit }) => {
-  const [sortedList, setSortedList] = useState(list)
-  const [sort, setSort] = useState({ key: "NONE", order: "asc" });
-  const handleSort = (sortKey) => {
-    if (sort.key === sortKey) {
-      let newOrder = sort.order === "asc" ? "desc" : "asc";
-      setSort({ key: sortKey, order: newOrder });
-    } else {
-      setSort({ key: sortKey, order: "asc" });
-    }
-  };
+const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
+  console.log("lsisiisi")
+  console.log(sortedList)
 
 
 
-  const sortBy = (list, key, order) => {
-    key = key.toLowerCase()
-    return list.sort((a, b) => {
-      console.log(key)
-      console.log(a)
-      const aValue = a[key];
-      const bValue = b[key];
-      if (order === "asc") {
-        return aValue > bValue ? 1 : -1;
-      } else {
-        return aValue < bValue ? 1 : -1;
-      }
-    });
-  };
-
-
-
-
-  useEffect(() => {
-    let newList = sortBy([...list], sort.key, sort.order)
-    setSortedList(newList)
-  }, [sort, list])
 
   return (
     <>
@@ -107,7 +77,7 @@ const List = ({ list, onRemoveItem, onSubmit }) => {
           </span>
 
         </li>
-        {sortedList.map((item) => (
+        {sortedList?.map((item) => (
           <Item
             key={item.objectID}
             item={item}
