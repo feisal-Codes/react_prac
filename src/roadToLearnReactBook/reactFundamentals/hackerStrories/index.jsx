@@ -10,25 +10,35 @@ const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
 //utility functions
 const getLastUrl = (urls) => {
-  console.log(urls);
   return urls[urls.length - 1];
 };
-
 const getUrl = (searchTerm) => {
   const url = `${API_ENDPOINT}${searchTerm}`
   return url
 }
-
 const getSearchTerm = (url) => {
   return url.split("query=")[1]
 }
+// const getLastSearches = (urls) => {
+//   let reversedList = [...urls].reverse()
+//   let uniqueUrls = [...new Set(reversedList)]
+//   let lastSearches = uniqueUrls.reverse()
+//   let lastSixSearches = lastSearches.slice(-6)
+//   return lastSixSearches.slice(0, -1)
+// }
+const getLastSearches = (urls) => {
+  let lastSearches = [...new Set([...urls].reverse())].slice(1, 7);
+  return lastSearches.reverse()
+};
+
+
 const HackerStories = () => {
   const [searchTerm, setSearchTerm] = useLocalStorage("searchTerm", "");
 
   // const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
   //implementing  5 last searches
 
-  const [urls, setUrls] = useState([`${API_ENDPOINT}${searchTerm}`]);
+  const [urls, setUrls] = useState([getUrl(searchTerm)]);
   const [sort, setSort] = useState({ key: "NONE", order: "asc" });
 
   const reducer = (state, action) => {
@@ -94,8 +104,9 @@ const HackerStories = () => {
 
   useEffect(() => {
     handleFetchStories()
-  }, [urls]);
+    console.log(urls)
 
+  }, [urls]);
 
 
 
@@ -143,7 +154,6 @@ const HackerStories = () => {
 
   const handleFetchStories = useCallback(() => {
     if (!searchTerm && urls.length === 0) {
-      console.log("here");
       return;
     }
 
@@ -154,8 +164,6 @@ const HackerStories = () => {
 
     // Use the latest URL
     const latestUrl = getLastUrl(urls);
-    console.log("and here")
-    console.log(latestUrl)
     // Fetch data using the latest URL
     fetchData(latestUrl);
   }, [urls]);
@@ -167,12 +175,12 @@ const HackerStories = () => {
   };
   //handle last search
   const handleLastSearch = (searchTerm) => {
-    console.log("we are here")
+
     const url = getUrl(searchTerm);
     setSearchTerm(searchTerm)
     setUrls((prevUrls) => {
-      let filteredurls = prevUrls.filter((u) => u !== url)
-      return [...filteredurls, url]
+      // let filteredUrls = prevUrls.filter((u) => u !== url)
+      return [...prevUrls, url]
 
     })
   }
@@ -186,23 +194,22 @@ const HackerStories = () => {
       return
     }
     setUrls((prevUrls) => {
-      let isUrlPresent = prevUrls.find(prevUrl => prevUrl === url)
-      if (isUrlPresent) {
-        let filteredurls = prevUrls.filter((url) => url !== isUrlPresent)
-        return [...filteredurls, isUrlPresent]
-      }
-      //if url is not present
+      // let isUrlPresent = prevUrls.find(prevUrl => prevUrl === url)
+      // if (isUrlPresent) {
+      //   let filteredurls = prevUrls.filter((url) => url !== isUrlPresent)
+      //   return [...filteredurls, isUrlPresent]
+      // }
+      // //if url is not present
 
-      else {
-        return [...prevUrls, url]
-      }
+      // else {
+      return [...prevUrls, url]
+      // }
     })
 
     e.preventDefault();
   };
 
 
-  // console.log(stories);
   return (
     <div>
       <div>
@@ -213,7 +220,7 @@ const HackerStories = () => {
         />
       </div>
       <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", gap: "10px", margin: "30px 0" }}>
-        {urls && urls.slice(-6).filter(url => getSearchTerm(url) !== searchTerm).map((url) => <button key={url}
+        {urls && getLastSearches(urls).map((url, idx) => <button key={idx}
           onClick={() => handleLastSearch(getSearchTerm(url))}
 
 
