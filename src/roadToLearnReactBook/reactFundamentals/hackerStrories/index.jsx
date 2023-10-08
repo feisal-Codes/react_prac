@@ -213,7 +213,7 @@ const HackerStories = () => {
         />
       </div>
       <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", gap: "10px", margin: "30px 0" }}>
-        {urls && urls.slice(-6).map((url) => <button key={url}
+        {urls && urls.slice(-6).filter(url => getSearchTerm(url) !== searchTerm).map((url) => <button key={url}
           onClick={() => handleLastSearch(getSearchTerm(url))}
 
 
