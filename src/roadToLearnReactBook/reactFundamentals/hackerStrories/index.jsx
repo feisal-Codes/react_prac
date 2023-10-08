@@ -13,12 +13,12 @@ const getLastUrl = (urls) => {
   return urls[urls.length - 1];
 };
 const getUrl = (searchTerm) => {
-  const url = `${API_ENDPOINT}${searchTerm}`
-  return url
-}
+  const url = `${API_ENDPOINT}${searchTerm}`;
+  return url;
+};
 const getSearchTerm = (url) => {
-  return url.split("query=")[1]
-}
+  return url.split("query=")[1];
+};
 // const getLastSearches = (urls) => {
 //   let reversedList = [...urls].reverse()
 //   let uniqueUrls = [...new Set(reversedList)]
@@ -27,10 +27,25 @@ const getSearchTerm = (url) => {
 //   return lastSixSearches.slice(0, -1)
 // }
 const getLastSearches = (urls) => {
-  let lastSearches = [...new Set([...urls].reverse())].slice(1, 7);
-  return lastSearches.reverse()
-};
+  // let lastSearches = [...new Set([...urls].reverse())].slice(1, 7);
+  // return lastSearches.reverse()
+  let lastSearches = urls
+    .reduce((result, url, index) => {
+      const searchTerm = getSearchTerm(url)
+      if (index === 0) {
+        return result.concat(searchTerm);
+      }
 
+      const previousSearchTerm = result[result.length - 1];
+      if (searchTerm === previousSearchTerm) {
+        return result;
+      } else {
+        return result.concat(searchTerm);
+        ;
+      }
+    }, [])
+  return lastSearches.slice(-6).slice(0, -1)
+};
 
 const HackerStories = () => {
   const [searchTerm, setSearchTerm] = useLocalStorage("searchTerm", "");
@@ -85,7 +100,6 @@ const HackerStories = () => {
   const [sortedList, setSortedList] = useState(stories.data);
 
   const fetchData = async (url) => {
-
     try {
       const response = await fetch(url);
       const result = await response.json();
@@ -103,11 +117,8 @@ const HackerStories = () => {
   };
 
   useEffect(() => {
-    handleFetchStories()
-
+    handleFetchStories();
   }, [urls]);
-
-
 
   //handles sorting of the list
   const handleSort = (sortKey) => {
@@ -167,38 +178,31 @@ const HackerStories = () => {
     fetchData(latestUrl);
   }, [urls]);
 
-
   const handleChange = (e) => {
     let value = e.target.value;
     setSearchTerm(value);
   };
   //handle last search
   const handleLastSearch = (searchTerm) => {
-
     const url = getUrl(searchTerm);
-    setSearchTerm(searchTerm)
+    setSearchTerm(searchTerm);
     setUrls((prevUrls) => {
       // let filteredUrls = prevUrls.filter((u) => u !== url)
-      return [...prevUrls, url]
-
-    })
-  }
-
-
-
+      return [...prevUrls, url];
+    });
+  };
 
   const handleSubmit = (e) => {
     const url = getUrl(searchTerm);
     if (!searchTerm) {
-      return
+      return;
     }
     setUrls((prevUrls) => {
-      return [...prevUrls, url]
-    })
+      return [...prevUrls, url];
+    });
 
     e.preventDefault();
   };
-
 
   return (
     <div>
@@ -209,12 +213,24 @@ const HackerStories = () => {
           value={searchTerm}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", gap: "10px", margin: "30px 0" }}>
-        {urls && getLastSearches(urls).map((url, idx) => <button key={idx}
-          onClick={() => handleLastSearch(getSearchTerm(url))}
-
-
-        >{getSearchTerm(url)}</button>)}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
+          margin: "30px 0",
+        }}
+      >
+        {urls &&
+          getLastSearches(urls)?.map((url, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleLastSearch(getSearchTerm(url))}
+            >
+              {url}
+            </button>
+          ))}
       </div>
 
       {stories.isError && <h2>Failed to Fetch</h2>}
