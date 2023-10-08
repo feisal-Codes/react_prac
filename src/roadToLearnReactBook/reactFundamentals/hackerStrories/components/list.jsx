@@ -24,8 +24,8 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
 );
 
 const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
-  console.log("lsisiisi")
-  console.log(sortedList)
+  // console.log("lsisiisi")
+  // console.log(sortedList)
 
 
 

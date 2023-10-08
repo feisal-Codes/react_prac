@@ -8,10 +8,27 @@ const SET_FETCH_FAIL = "SET_FETCH_FAIL";
 const SET_REMOVE_STORY = "SET_REMOVE_STORY";
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
+//utility functions
+const getLastUrl = (urls) => {
+  console.log(urls);
+  return urls[urls.length - 1];
+};
+
+const getUrl = (searchTerm) => {
+  const url = `${API_ENDPOINT}${searchTerm}`
+  return url
+}
+
+const getSearchTerm = (url) => {
+  return url.split("query=")[1]
+}
 const HackerStories = () => {
   const [searchTerm, setSearchTerm] = useLocalStorage("searchTerm", "");
 
-  const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
+  // const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
+  //implementing  5 last searches
+
+  const [urls, setUrls] = useState([`${API_ENDPOINT}${searchTerm}`]);
   const [sort, setSort] = useState({ key: "NONE", order: "asc" });
 
   const reducer = (state, action) => {
@@ -57,12 +74,12 @@ const HackerStories = () => {
   });
   const [sortedList, setSortedList] = useState(stories.data);
 
+  const fetchData = async (url) => {
 
-  const fetchData = async () => {
     try {
       const response = await fetch(url);
-
       const result = await response.json();
+
       storiesDispatcher({
         type: SET_STORIES,
         payload: result.hits,
@@ -75,7 +92,14 @@ const HackerStories = () => {
     }
   };
 
-  //handles sorting of the list 
+  useEffect(() => {
+    handleFetchStories()
+  }, [urls]);
+
+
+
+
+  //handles sorting of the list
   const handleSort = (sortKey) => {
     if (sort.key === sortKey) {
       let newOrder = sort.order === "asc" ? "desc" : "asc";
@@ -85,7 +109,6 @@ const HackerStories = () => {
     }
   };
   const handleRemoveItem = (item) => {
-    console.log("****************************8");
     storiesDispatcher({
       type: SET_REMOVE_STORY,
       payload: item.objectID,
@@ -96,10 +119,8 @@ const HackerStories = () => {
   const sortBy = (list, key, order) => {
     key = key.toLowerCase();
     return list.sort((a, b) => {
-      console.log(key);
-      console.log(a);
-      let aValue = a[key]
-      let bValue = b[key]
+      let aValue = a[key];
+      let bValue = b[key];
       if (typeof a[key] === "string" && typeof b[key] === "string") {
         aValue = a[key].toLowerCase();
         bValue = b[key].toLowerCase();
@@ -112,42 +133,76 @@ const HackerStories = () => {
       }
     });
   };
+
   //sets an effect on stories.data and reloads everytime it changes
 
   useEffect(() => {
     let newList = sortBy([...stories.data], sort.key, sort.order);
     setSortedList(newList);
   }, [sort, stories.data]);
+
   const handleFetchStories = useCallback(() => {
-    if (!searchTerm) {
+    if (!searchTerm && urls.length === 0) {
       console.log("here");
       return;
     }
+
     storiesDispatcher({
       type: SET_INIT_LOADING,
       payload: true,
     });
 
-    fetchData();
+    // Use the latest URL
+    const latestUrl = getLastUrl(urls);
+    console.log("and here")
+    console.log(latestUrl)
+    // Fetch data using the latest URL
+    fetchData(latestUrl);
+  }, [urls]);
 
-
-  }, [url]);
 
   const handleChange = (e) => {
     let value = e.target.value;
     setSearchTerm(value);
   };
+  //handle last search
+  const handleLastSearch = (searchTerm) => {
+    console.log("we are here")
+    const url = getUrl(searchTerm);
+    setSearchTerm(searchTerm)
+    setUrls((prevUrls) => {
+      let filteredurls = prevUrls.filter((u) => u !== url)
+      return [...filteredurls, url]
+
+    })
+  }
+
 
 
 
   const handleSubmit = (e) => {
-    console.log(searchTerm);
-    handleFetchStories();
+    const url = getUrl(searchTerm);
+    if (!searchTerm) {
+      return
+    }
+    setUrls((prevUrls) => {
+      let isUrlPresent = prevUrls.find(prevUrl => prevUrl === url)
+      if (isUrlPresent) {
+        let filteredurls = prevUrls.filter((url) => url !== isUrlPresent)
+        return [...filteredurls, isUrlPresent]
+      }
+      //if url is not present
+
+      else {
+        return [...prevUrls, url]
+      }
+    })
+
     e.preventDefault();
   };
 
 
-  console.log(stories);
+  // console.log(stories);
   return (
     <div>
       <div>
@@ -156,6 +211,13 @@ const HackerStories = () => {
           onSubmit={handleSubmit}
           value={searchTerm}
         />
+      </div>
+      <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", gap: "10px", margin: "30px 0" }}>
+        {urls && urls.slice(-6).map((url) => <button key={url}
+          onClick={() => handleLastSearch(getSearchTerm(url))}
+
+
+        >{getSearchTerm(url)}</button>)}
       </div>
 
       {stories.isError && <h2>Failed to Fetch</h2>}
@@ -177,7 +239,6 @@ const HackerStories = () => {
 };
 
 export default HackerStories;
-
 
 /**for reference 
  *   // const [timeOutId, setTimeOutId] = useState(null);
