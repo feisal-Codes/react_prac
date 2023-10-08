@@ -104,7 +104,6 @@ const HackerStories = () => {
 
   useEffect(() => {
     handleFetchStories()
-    console.log(urls)
 
   }, [urls]);
 
