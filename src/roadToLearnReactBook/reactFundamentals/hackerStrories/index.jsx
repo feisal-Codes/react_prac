@@ -193,16 +193,7 @@ const HackerStories = () => {
       return
     }
     setUrls((prevUrls) => {
-      // let isUrlPresent = prevUrls.find(prevUrl => prevUrl === url)
-      // if (isUrlPresent) {
-      //   let filteredurls = prevUrls.filter((url) => url !== isUrlPresent)
-      //   return [...filteredurls, isUrlPresent]
-      // }
-      // //if url is not present
-
-      // else {
       return [...prevUrls, url]
-      // }
     })
 
     e.preventDefault();
