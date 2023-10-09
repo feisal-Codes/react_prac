@@ -203,7 +203,7 @@ const HackerStories = () => {
 
     e.preventDefault();
   };
-
+  const lastSearches = getLastSearches(urls)
   return (
     <div>
       <div>
@@ -213,25 +213,7 @@ const HackerStories = () => {
           value={searchTerm}
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "10px",
-          margin: "30px 0",
-        }}
-      >
-        {urls &&
-          getLastSearches(urls)?.map((url, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleLastSearch(getSearchTerm(url))}
-            >
-              {url}
-            </button>
-          ))}
-      </div>
+      <LastSearches handleLastSearch={handleLastSearch} lastSearches={lastSearches} />
 
       {stories.isError && <h2>Failed to Fetch</h2>}
 
@@ -252,6 +234,53 @@ const HackerStories = () => {
 };
 
 export default HackerStories;
+
+
+
+
+
+const LastSearches = ({ handleLastSearch, lastSearches }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "10px",
+        margin: "30px 0",
+      }}
+    >
+
+      {lastSearches.map((searchTerm, idx) => (
+        <button
+          key={idx}
+          onClick={() => handleLastSearch(searchTerm)}
+        >
+          {searchTerm}
+        </button>
+      ))}
+    </div>)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**for reference 
  *   // const [timeOutId, setTimeOutId] = useState(null);
