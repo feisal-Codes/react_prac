@@ -6,18 +6,23 @@ const SET_STORIES = "SET_STORIES";
 const SET_INIT_LOADING = "SET_INIT_LOADING";
 const SET_FETCH_FAIL = "SET_FETCH_FAIL";
 const SET_REMOVE_STORY = "SET_REMOVE_STORY";
-const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
+// const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
+const API_BASE = 'https://hn.algolia.com/api/v1';
+const API_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
 
 //utility functions
 const getLastUrl = (urls) => {
   return urls[urls.length - 1];
 };
 const getUrl = (searchTerm) => {
-  const url = `${API_ENDPOINT}${searchTerm}`;
+  const url = `${API_BASE}${API_SEARCH}?${PARAM_SEARCH}${searchTerm}`;
   return url;
 };
 const getSearchTerm = (url) => {
-  return url.split("query=")[1];
+  return url
+    .substring(url.lastIndexOf('?') + 1)
+    .replace(PARAM_SEARCH, '');
 };
 // const getLastSearches = (urls) => {
 //   let reversedList = [...urls].reverse()
@@ -204,6 +209,7 @@ const HackerStories = () => {
     e.preventDefault();
   };
   const lastSearches = getLastSearches(urls)
+
   return (
     <div>
       <div>
@@ -253,7 +259,7 @@ const LastSearches = ({ handleLastSearch, lastSearches }) => {
 
       {lastSearches.map((searchTerm, idx) => (
         <button
-          key={idx}
+          key={searchTerm + idx}
           onClick={() => handleLastSearch(searchTerm)}
         >
           {searchTerm}
