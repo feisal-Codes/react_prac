@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Item from "./item";
 import "./style.css";
-import { BiUpArrow, BiDownArrow } from "react-icons/bi"
+import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
 const SortButton = ({ label, sort, onClick, isActive, className }) => (
-
   <span className={className}>
     <button
       onClick={onClick}
-      style={{ fontWeight: isActive ? "bold" : "normal", display: "flex", alignItems: "center" }}
+      style={{
+        fontWeight: isActive ? "bold" : "normal",
+        display: "flex",
+        alignItems: "center",
+      }}
     >
-      <span>      {label}
-      </span>
+      <span> {label}</span>
       <span style={{ marginLeft: "2px" }}>
-        {sort.order === "asc" && isActive && <BiUpArrow />
-        }
-        {sort.order === "desc" && isActive && <BiDownArrow />
-        }
+        {sort.order === "asc" && isActive && <BiUpArrow />}
+        {sort.order === "desc" && isActive && <BiDownArrow />}
       </span>
     </button>
-
   </span>
 );
 
 const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
   // console.log("lsisiisi")
-  // console.log(sortedList)
-
-
-
+  console.log("needed list");
+  console.log(sortedList);
 
   return (
     <>
@@ -41,7 +38,8 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
             className="title"
             label="TITLE"
             sort={sort}
-            isActive={sort.key === "TITLE"} />
+            isActive={sort.key === "TITLE"}
+          />
 
           <SortButton
             onClick={() => {
@@ -50,7 +48,8 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
             label="AUTHOR"
             className="author"
             sort={sort}
-            isActive={sort.key === "AUTHOR"} />
+            isActive={sort.key === "AUTHOR"}
+          />
 
           <SortButton
             onClick={() => {
@@ -59,8 +58,8 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
             sort={sort}
             label="COMMENTS"
             className="comments"
-            isActive={sort.key === "NUM_COMMENTS"} />
-
+            isActive={sort.key === "NUM_COMMENTS"}
+          />
 
           <SortButton
             onClick={() => {
@@ -75,7 +74,6 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
           <span className="comments">
             <button>Actions</button>
           </span>
-
         </li>
         {sortedList?.map((item) => (
           <Item
@@ -86,7 +84,6 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
           />
         ))}
       </ul>
-
     </>
   );
 };
