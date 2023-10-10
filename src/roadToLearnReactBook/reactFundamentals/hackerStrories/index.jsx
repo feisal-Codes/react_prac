@@ -343,6 +343,17 @@ const LastSearches = ({ handleLastSearch, lastSearches }) => {
         <button
           key={searchTerm + idx}
           onClick={() => handleLastSearch(searchTerm)}
+          style={{
+            padding: "10px",
+            background: "#3498db",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background 0.3s",
+            fontSize: "16px",
+            outline: "none",
+          }}
         >
           {searchTerm}
         </button>

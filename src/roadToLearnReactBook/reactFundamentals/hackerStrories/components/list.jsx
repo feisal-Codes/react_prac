@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Item from "./item";
+import React from "react";
 import "./style.css";
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
+import Item from "./item";
 
 const SortButton = ({ label, sort, onClick, isActive, className }) => (
   <span className={className}>
@@ -11,26 +11,36 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
         fontWeight: isActive ? "bold" : "normal",
         display: "flex",
         alignItems: "center",
+        backgroundColor: isActive ? "#4CAF50" : "#3498db", // Green if active, Blue if inactive
+        color: "white",
+        border: "none",
+        padding: "10px",
+        borderRadius: "5px",
+        cursor: "pointer",
       }}
     >
       <span> {label}</span>
       <span style={{ marginLeft: "2px" }}>
-        {sort.order === "asc" && isActive && <BiUpArrow />}
-        {sort.order === "desc" && isActive && <BiDownArrow />}
+        {sort && sort.order === "asc" && isActive && <BiUpArrow />}
+        {sort && sort.order === "desc" && isActive && <BiDownArrow />}
       </span>
     </button>
   </span>
 );
 
 const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
-  // console.log("lsisiisi")
-  console.log("needed list");
-  console.log(sortedList);
-
   return (
     <>
-      <ul>
-        <li style={{ display: "flex", marginBottom: "5px" }}>
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        <li
+          style={{
+            display: "flex",
+            marginBottom: "5px",
+            padding: "10px",
+            backgroundColor: "#f1f1f1", // Light Gray background
+            borderRadius: "5px",
+          }}
+        >
           <SortButton
             onClick={() => {
               handleSort("TITLE");
@@ -66,13 +76,18 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
               handleSort("POINTS");
             }}
             label="POINTS"
-            className="comments"
+            className="points"
             sort={sort}
             isActive={sort.key === "POINTS"}
           />
 
-          <span className="comments">
-            <button>Actions</button>
+          <span
+            className="comments"
+            style={{
+              marginLeft: "20px",
+            }}
+          >
+            <SortButton label="ACTION" isActive={false} />
           </span>
         </li>
         {sortedList?.map((item) => (
