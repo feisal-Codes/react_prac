@@ -28,7 +28,26 @@ const SortButton = ({ label, sort, onClick, isActive, className }) => (
   </span>
 );
 
-const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
+const List = ({
+  sortedList,
+  filters,
+  onRemoveItem,
+  onSubmit,
+  handleSort,
+  sort,
+}) => {
+  let sortedNewList = [];
+  if (filters.criteria.comments || filters.criteria.points) {
+    sortedNewList = sortedList.filter((story) => {
+      let isMostPoints = !filters.criteria.points || story.points > 300;
+      let isMostComments =
+        !filters.criteria.comments || story.num_comments > 200;
+      return isMostPoints && isMostComments;
+    });
+  } else {
+    sortedNewList = [...sortedList];
+  }
+
   return (
     <>
       <ul style={{ listStyle: "none", padding: 0 }}>
@@ -90,7 +109,7 @@ const List = ({ sortedList, onRemoveItem, onSubmit, handleSort, sort }) => {
             <SortButton label="ACTION" isActive={false} />
           </span>
         </li>
-        {sortedList?.map((item) => (
+        {sortedNewList.map((item) => (
           <Item
             key={item.objectID}
             item={item}

@@ -56,3 +56,60 @@ const Item = ({ item, onRemoveItem }) => {
 };
 
 export default Item;
+
+/**for reference 
+ *   // const [timeOutId, setTimeOutId] = useState(null);
+
+ * 
+ * // clearTimeout(timeOutId);
+// useEffect(() => {
+  //   handleFetchStories();
+  // }, [handleFetchStories]);
+    // let newTimeOutId = setTimeout(() => {
+    //   fetchData();
+    // }, 200);
+    //refactored to fetching data explicitly
+    //   if (newTimeOutId) {
+    //     setTimeOutId(newTimeOutId);
+    //   }
+    // }, [searchTerm]);
+ * // useEffect(() => {
+  //   if (searchTerm === "") return;
+  //   storiesDispatcher({
+  //     type: SET_INIT_LOADING,
+  //     payload: true,
+  //   });
+  //   fetchData();
+  // }, [searchTerm]);
+
+  // useEffect(() => {
+  //   if (!searchTerm) {
+  //     return;
+  //   }
+  //   storiesDispatcher({
+  //     type: SET_INIT_LOADING,
+  //     payload: true,
+  //   });
+  //   clearTimeout(timeOutId);
+
+  //   let newTimeOutId = setTimeout(() => {
+  //     // storiesDispatcher({
+  //     //   type: SEARCH_STORIES,
+  //     //   payload: searchTerm,
+  //     // });
+  //     fetchData();
+  //   }, 200);
+  //   if (newTimeOutId) {
+  //     setTimeOutId(newTimeOutId);
+  //   }
+
+  //   // if (searchTerm === "") {
+  //   //   storiesDispatcher({
+  //   //     type: "default",
+  //   //   });
+  //   // }
+
+  //   return () => clearTimeout(newTimeOutId);
+  // }, [searchTerm]);
+
+ */

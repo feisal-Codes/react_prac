@@ -16,6 +16,10 @@ const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const SET_PAGE_NUMBER = "SET_PAGE_NUMBER";
 const RESET_PAGE_NUMBER = "RESET_PAGE_NUMBER";
+const COMMENTS_FILTER = "COMMENTS_FILTER";
+const POINTS_FILTER = "POINTS_FILTER";
+const TITLE_FILTER = "TITLE_FILTER";
+const SET_FILTERS = "SET_FILTERS";
 
 // Utility functions
 
@@ -127,9 +131,83 @@ const HackerStories = () => {
     isLoading: false,
     isError: false,
   });
-
-  // State for storing sorted list
   const [sortedList, setSortedList] = useState(stories.data);
+
+  //apply filters reducer
+  const filterReducer = (state, action) => {
+    switch (action.type) {
+      // case COMMENTS_FILTER: {
+      //   const filteredData = stories.data.filter(
+      //     (story) => story.num_comments > 300
+      //   );
+      //   console.log("inside comments filter");
+      //   console.log(filteredData);
+      //   return {
+      //     ...state,
+      //     data: filteredData,
+      //   };
+      // }
+
+      case SET_FILTERS: {
+        // console.log(action.name);
+        // console.log(action.payload);
+        return {
+          ...state,
+          criteria: {
+            ...state.criteria,
+            [action.name]: action.payload,
+          },
+        };
+      }
+
+      default:
+        return state;
+    }
+  };
+  const [filters, filtersDispatcher] = useReducer(filterReducer, {
+    criteria: {
+      comments: "",
+      points: "",
+    },
+    data: [...stories.data],
+  });
+
+  console.log("******************************************");
+  console.log("******************************************");
+  console.log("******************************************");
+  console.log("******************************************");
+
+  console.log("filters", filters.data);
+  console.log("########################################");
+
+  const handleSetFilters = (e) => {
+    console.log(e.target);
+    let { name, value, checked } = e.target;
+    console.log(checked, "and value", value);
+    filtersDispatcher({
+      type: SET_FILTERS,
+      payload: checked,
+      name: name,
+    });
+  };
+
+  // const applyFilters = () => {
+  //   console.log("here");
+  //   if (!filters) {
+  //     console.log("here too");
+
+  //     return;
+  //   }
+  //   console.log(filters);
+  //   if (filters.criteria.comments) {
+  //     console.log("and here");
+  //     filtersDispatcher({
+  //       type: COMMENTS_FILTER,
+  //       payload: 200,
+  //     });
+  //   }
+  // };
+  // State for storing sorted list
 
   // State for storing search history URLs
   const [urls, setUrls] = useState([getUrl(searchTerm, stories.page)]);
@@ -157,6 +235,8 @@ const HackerStories = () => {
     setSort({ key: "NONE", order: "asc" });
     handleFetchStories();
   }, [stories.page, urls]);
+
+  //useEffect for filters
 
   // Function to handle sorting of the list
   const handleSort = (sortKey) => {
@@ -206,6 +286,10 @@ const HackerStories = () => {
 
     setSortedList(newList);
   }, [sort, stories.data]);
+
+  // useEffect(() => {
+  //   applyFilters();
+  // }, [filters.criteria.comments]);
 
   // useCallback to memoize handleFetchStories function
   const handleFetchStories = useCallback(() => {
@@ -279,9 +363,10 @@ const HackerStories = () => {
     });
   };
 
+  //function to handle onChnage in filters
+
   return (
     <div>
-      {/* Search component */}
       <div>
         <Search
           onChange={handleChange}
@@ -290,30 +375,38 @@ const HackerStories = () => {
         />
       </div>
 
-      {/* Last searches component */}
       <LastSearches
         handleLastSearch={handleLastSearch}
         lastSearches={lastSearches}
       />
 
-      {/* Display error message on fetch failure */}
       {stories.isError && <h2>Failed to Fetch</h2>}
 
-      {/* Display loading message during data fetch */}
       {stories.loading && <h2>Loading stories... </h2>}
 
-      {/* Display list and load more button when there are stories */}
       {stories.data.length > 0 && (
         <div>
-          {/* List component */}
+          <CheckBox
+            value={filters.criteria.comments}
+            onChange={handleSetFilters}
+            name="comments"
+            label="most commented"
+          />
+          <CheckBox
+            value={filters.criteria.points}
+            onChange={handleSetFilters}
+            name="points"
+            label="most points"
+          />
+
           <List
             handleSort={handleSort}
             sortedList={sortedList}
             sort={sort}
+            filters={filters}
             onRemoveItem={handleRemoveItem}
           />
 
-          {/* Load more button component */}
           <LoadMoreButton
             loading={stories.isLoading}
             onLoadMore={handleLoadMore}
@@ -389,59 +482,16 @@ const LoadMoreButton = ({ onLoadMore, loading }) => {
   );
 };
 
-/**for reference 
- *   // const [timeOutId, setTimeOutId] = useState(null);
+const CheckBox = ({ label, name, onChange, value }) => {
+  console.log("from checkbox");
+  console.log(value);
+  return (
+    <>
+      <label>
+        <input type="checkbox" name={name} value={value} onChange={onChange} />
 
- * 
- * // clearTimeout(timeOutId);
-// useEffect(() => {
-  //   handleFetchStories();
-  // }, [handleFetchStories]);
-    // let newTimeOutId = setTimeout(() => {
-    //   fetchData();
-    // }, 200);
-    //refactored to fetching data explicitly
-    //   if (newTimeOutId) {
-    //     setTimeOutId(newTimeOutId);
-    //   }
-    // }, [searchTerm]);
- * // useEffect(() => {
-  //   if (searchTerm === "") return;
-  //   storiesDispatcher({
-  //     type: SET_INIT_LOADING,
-  //     payload: true,
-  //   });
-  //   fetchData();
-  // }, [searchTerm]);
-
-  // useEffect(() => {
-  //   if (!searchTerm) {
-  //     return;
-  //   }
-  //   storiesDispatcher({
-  //     type: SET_INIT_LOADING,
-  //     payload: true,
-  //   });
-  //   clearTimeout(timeOutId);
-
-  //   let newTimeOutId = setTimeout(() => {
-  //     // storiesDispatcher({
-  //     //   type: SEARCH_STORIES,
-  //     //   payload: searchTerm,
-  //     // });
-  //     fetchData();
-  //   }, 200);
-  //   if (newTimeOutId) {
-  //     setTimeOutId(newTimeOutId);
-  //   }
-
-  //   // if (searchTerm === "") {
-  //   //   storiesDispatcher({
-  //   //     type: "default",
-  //   //   });
-  //   // }
-
-  //   return () => clearTimeout(newTimeOutId);
-  // }, [searchTerm]);
-
- */
+        {label}
+      </label>
+    </>
+  );
+};
