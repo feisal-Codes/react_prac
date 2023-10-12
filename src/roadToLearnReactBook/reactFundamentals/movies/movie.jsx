@@ -1,51 +1,11 @@
 import React, { useEffect, useState } from "react";
-
-//utility functions
-
-const sortBy = (list, key, order) => {
-  return list.sort((a, b) => {
-    //extract keys
-    let aValue = a[key];
-    let bValue = b[key];
-
-    //check if keys are strings
-
-    if (typeof aValue === "string" && typeof bValue === "string") {
-      aValue = aValue.toLowerCase();
-      bValue = bValue.toLowerCase();
-    }
-
-    if (order === "asc") {
-      return aValue > bValue ? 1 : -1;
-    } else {
-      return aValue < bValue ? 1 : -1;
-    }
-  });
-};
-const applyFilters = (movies, filters) => {
-  return movies.filter((movie) => {
-    return !filters.genre || movie.genre === filters.genre;
-  });
-};
-
-const applySearch = (movies, searchTerm) => {
-  //multiple searches
-  let searched = movies.filter((movie) => {
-    let isTitle =
-      !searchTerm.title ||
-      movie.title.toLowerCase().includes(searchTerm.title.toLowerCase().trim());
-    let isCategory =
-      !searchTerm.category ||
-      movie.genre.toLowerCase() === searchTerm.category.toLowerCase().trim();
-    let isReleaseYear =
-      !searchTerm.year ||
-      Number(movie.releaseYear) === Number(searchTerm.year.trim());
-
-    return isTitle && isCategory && isReleaseYear;
-  });
-
-  return searched;
-};
+import MovieList from "./movieList";
+import Select from "./formComponents/select";
+import RadioButton from "./formComponents/radioButton";
+import Input from "./formComponents/input";
+import applyFilters from "./utils/applyFilter";
+import applySearch from "./utils/applySearch";
+import sortBy from "./utils/applySort";
 
 const Movie = ({ data }) => {
   const [movies, setMovies] = useState(data ? data : []);
@@ -165,63 +125,3 @@ const Movie = ({ data }) => {
 };
 
 export default Movie;
-
-const MovieList = ({ movies }) => {
-  return (
-    <>
-      {movies.map((movie) => (
-        <Item key={movie.id} movie={movie} />
-      ))}
-    </>
-  );
-};
-
-const Item = ({ movie }) => {
-  return (
-    <div style={{ borderBottom: "black solid 1px " }}>
-      <h3>{movie.title}</h3>
-      <h3>{movie.genre}</h3>
-      <h3>{movie.releaseYear}</h3>
-    </div>
-  );
-};
-
-const Select = ({ label, name, value, onChange, options }) => {
-  return (
-    <label>
-      <span style={{ marginRight: "5px" }}>{label}</span>
-      <select name={name} value={value} onChange={onChange}>
-        <option value="">Select an option</option>
-        {options.map((option, idx) => (
-          <option value={option} key={idx}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-};
-
-const RadioButton = ({ label, name, onChange, value }) => {
-  return (
-    <label>
-      {label}
-      <input type="radio" value={value} name={name} onChange={onChange} />
-    </label>
-  );
-};
-
-const Input = ({ value, name, id, label, onChange }) => {
-  return (
-    <label>
-      <input
-        type="text"
-        placeholder={label}
-        value={value}
-        name={name}
-        id={id}
-        onChange={onChange}
-      />
-    </label>
-  );
-};

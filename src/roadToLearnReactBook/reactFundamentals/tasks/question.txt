@@ -1,0 +1,30 @@
+Task Management Dashboard
+Task Data:
+
+Each task has the following properties:
+id (unique identifier)
+title (task title)
+description (task description)
+status (task status, e.g., "Not Started," "In Progress," "Completed")
+dueDate (date when the task is due)
+Functionality to Implement:
+
+Sorting:
+
+Allow users to sort tasks based on different criteria such as title, 
+status, or due date. Provide options for both ascending and descending order.
+Filtering:
+
+Allow users to filter tasks based on their 
+status (e.g., show only tasks that are "In Progress" or "Not Started").
+Searching:
+
+Implement a search bar that allows users to search for tasks based on title or description. 
+The search should be dynamic and update as the user types.
+
+Your Task:
+Implement a React component (TaskDashboard) that displays a list of tasks and provides the sorting, filtering, and searching functionality described above.
+ Use dummy data for tasks, and make sure the component is modular, with separate components for the task list, sorting options, filtering options, and the search bar.
+
+Feel free to use hooks, 
+state management libraries (if needed), and any other modern React practices. 

@@ -14,6 +14,7 @@ import HackerStories from "./hackerStrories";
 import MiniMovieApp from "./movies";
 import CounterCharacter from "./practises/counterCharacter";
 import Home from "./practises/renderProps";
+import TasksManagement from "./tasks";
 const initialData = [
   { id: 1, name: "Product A", quantity: 20 },
   { id: 2, name: "Product B", quantity: 15 },
@@ -44,7 +45,8 @@ const Fundamentals = () => {
       {/* <HackerStories /> */}
       {/* <CounterCharacter /> */}
       {/* <Home /> */}
-      <MiniMovieApp />
+      {/* <MiniMovieApp /> */}
+      <TasksManagement />
     </>
   );
 };
