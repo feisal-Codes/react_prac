@@ -11,6 +11,9 @@ import Count from "./count";
 import EventBubbling from "./eventBubbling";
 import GenericComponents from "./genericComponents";
 import HackerStories from "./hackerStrories";
+import MiniMovieApp from "./movies";
+import CounterCharacter from "./practises/counterCharacter";
+import Home from "./practises/renderProps";
 const initialData = [
   { id: 1, name: "Product A", quantity: 20 },
   { id: 2, name: "Product B", quantity: 15 },
@@ -38,7 +41,10 @@ const Fundamentals = () => {
       {/* <Auth /> */}
       {/* <Table initialData={initialData} /> */}
 
-      <HackerStories />
+      {/* <HackerStories /> */}
+      {/* <CounterCharacter /> */}
+      {/* <Home /> */}
+      <MiniMovieApp />
     </>
   );
 };
