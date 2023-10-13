@@ -41,6 +41,12 @@ const MusicPlayer = () => {
         newSong = playList[currSongIndex + 1];
         newSong.status = "playing";
         setCurrentSong(() => newSong);
+      } else {
+        let lastSong = playList[lastIndex];
+        lastSong.status = "not playing";
+        let newSong = playList[0];
+        newSong.status = "playing";
+        setCurrentSong(() => newSong);
       }
     }
   };
@@ -58,6 +64,12 @@ const MusicPlayer = () => {
         oldSong.status = "not playing";
         let newSong = {};
         newSong = playList[currSongIndex - 1];
+        newSong.status = "playing";
+        setCurrentSong(() => newSong);
+      } else {
+        let lastSong = playList[firstIndex];
+        lastSong.status = "not playing";
+        let newSong = playList[playList.length - 1];
         newSong.status = "playing";
         setCurrentSong(() => newSong);
       }
