@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles.module.css";
 import { FaComments, FaEdit, FaTrash } from "react-icons/fa";
@@ -18,9 +18,27 @@ const TaskManagement = () => {
   });
 
   const [tasks, setTasks] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleAddTask = (task) => {
-    setTasks((prev) => [{ id: uuidv4(), ...task }, ...prev]);
+    if (!isEditing) {
+      console.log("and here");
+      setTasks((prev) => [{ id: uuidv4(), ...task }, ...prev]);
+    } else {
+      //transform tasks and modify the given task
+      //set the updated tasks back to the task state
+      let updatedTasks = tasks.map((item) =>
+        item.id === task.id ? { ...task } : { ...item }
+      );
+      setTasks(() => updatedTasks);
+      setIsEditing(false);
+    }
+
+    setFormFields(() => ({
+      title: "",
+      description: "",
+      dueDate: "",
+    }));
   };
 
   const handleDeleteTask = (taskId) => {
@@ -35,6 +53,13 @@ const TaskManagement = () => {
     });
   };
 
+  const handleEdit = (task) => {
+    setIsEditing(true);
+    setFormFields(() => ({
+      ...task,
+    }));
+  };
+
   return (
     <div className={styles.formContainer}>
       <div className={styles.formSection}>
@@ -42,10 +67,15 @@ const TaskManagement = () => {
           formFields={formFields}
           onChange={handleChange}
           onAddTask={handleAddTask}
+          isEditing={isEditing}
         />
       </div>
       <div className={styles.listSection}>
-        <ListTasks tasks={tasks} onRemoveTask={handleDeleteTask} />
+        <ListTasks
+          tasks={tasks}
+          onRemoveTask={handleDeleteTask}
+          onEdit={handleEdit}
+        />
       </div>
     </div>
   );
@@ -53,20 +83,21 @@ const TaskManagement = () => {
 
 export default TaskManagement;
 
-const CreateTask = ({ formFields, onChange, onAddTask }) => {
+const CreateTask = ({ formFields, onChange, onAddTask, isEditing }) => {
   const submit = (e) => {
+    e.preventDefault();
+
     if (!formFields) {
       console.log("return");
       return;
     }
     onAddTask(formFields);
     console.log(formFields);
-    e.preventDefault();
   };
-
+  console.log("inside form", isEditing);
   return (
     <>
-      <Form onSubmit={submit}>
+      <Form onSubmit={submit} label={isEditing ? "Edit Task" : "Add Task"}>
         <Input
           name="title"
           onChange={onChange}
@@ -91,13 +122,14 @@ const CreateTask = ({ formFields, onChange, onAddTask }) => {
   );
 };
 
-const Form = ({ children, onSubmit }) => {
+const Form = ({ children, onSubmit, label }) => {
+  console.log(label);
   return (
     <>
       <form onSubmit={onSubmit} className={styles.formSection}>
         {children}
         <button type="submit" className={styles.formButton}>
-          Add Task
+          {label}
         </button>
       </form>
     </>
@@ -137,7 +169,7 @@ const TextArea = ({ name, onChange, label, value }) => {
 
 // Your component file
 
-const ListTasks = ({ tasks, onRemoveTask }) => {
+const ListTasks = ({ tasks, onRemoveTask, onEdit }) => {
   console.log(tasks);
 
   return (
@@ -154,7 +186,7 @@ const ListTasks = ({ tasks, onRemoveTask }) => {
         {tasks?.map((task) => (
           <tr key={task.id} className={styles.listItem}>
             <td>{task.title}</td>
-            <td>{task.description}</td>
+            <td className={styles.description}>{task.description}</td>
             <td>
               <i>Task is due on: {task.dueDate.toString()}</i>
             </td>
@@ -163,7 +195,10 @@ const ListTasks = ({ tasks, onRemoveTask }) => {
                 <button className={styles.iconButton}>
                   <FaComments />
                 </button>
-                <button className={styles.iconButton}>
+                <button
+                  onClick={() => onEdit(task)}
+                  className={styles.iconButton}
+                >
                   <FaEdit />
                 </button>
                 <button
@@ -178,5 +213,33 @@ const ListTasks = ({ tasks, onRemoveTask }) => {
         ))}
       </tbody>
     </table>
+  );
+};
+
+const EditTask = () => {
+  return (
+    <>
+      <Form onSubmit={onEdit}>
+        <Input
+          name="title"
+          onChange={onChange}
+          label="Title"
+          value={formFields.title}
+        />
+        <TextArea
+          name="description"
+          onChange={onChange}
+          label="Description"
+          value={formFields.description}
+        />
+        <Input
+          type="date"
+          name="dueDate"
+          onChange={onChange}
+          label="Due Date"
+          value={formFields.dueDate}
+        />
+      </Form>
+    </>
   );
 };

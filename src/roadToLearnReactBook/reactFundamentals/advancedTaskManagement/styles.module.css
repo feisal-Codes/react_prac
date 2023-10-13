@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     height: 100vh;
     /* display: flex;
     overflow: hidden; */
@@ -58,17 +58,6 @@ body {
 }
 
 
-
-/* .listItem {
-    background-color: white;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-} */
-
 .listTitle {
     font-size: 18px;
     margin-bottom: 0.5rem;
@@ -76,13 +65,12 @@ body {
 
 .listDescription {
     margin-bottom: 0.5rem;
+    white-space: normal;
 }
 
 .listDueDate {
     color: #718096;
 }
-
-
 
 .table {
     width: 100%;
@@ -93,6 +81,8 @@ body {
 .listItem {
     border: 1px solid #ccc;
 }
+
+
 
 .table th,
 .table td {
