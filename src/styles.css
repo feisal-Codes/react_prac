@@ -12,6 +12,7 @@
   /* gap: 10px; */
   flex-wrap: wrap;
 }
+
 flex-1 {
   flex: 1;
 }
@@ -27,6 +28,7 @@ flex-1 {
 .justify-center {
   justify-content: center;
 }
+
 justify-around {
   justify-content: space-around;
 }
@@ -34,6 +36,7 @@ justify-around {
 justify-between {
   justify-content: space-between;
 }
+
 table {
   width: 80%;
   border-collapse: collapse;

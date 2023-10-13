@@ -12,6 +12,7 @@ import EventBubbling from "./eventBubbling";
 import GenericComponents from "./genericComponents";
 import HackerStories from "./hackerStrories";
 import MiniMovieApp from "./movies";
+import MusicPlayer from "./musicPlayer";
 import CounterCharacter from "./practises/counterCharacter";
 import Home from "./practises/renderProps";
 import TasksManagement from "./tasks";
@@ -46,7 +47,8 @@ const Fundamentals = () => {
       {/* <CounterCharacter /> */}
       {/* <Home /> */}
       {/* <MiniMovieApp /> */}
-      <TasksManagement />
+      {/* <TasksManagement /> */}
+      <MusicPlayer />
     </>
   );
 };
