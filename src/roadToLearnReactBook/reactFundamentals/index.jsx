@@ -6,6 +6,7 @@ import {
   EnhancedD,
 } from "./HOCs/codeReusability";
 import { Auth } from "./HOCs/crossCuttingConcerns";
+import TaskManagement from "./advancedTaskManagement";
 // import Table from "./advancedState/table";
 import Count from "./count";
 import EventBubbling from "./eventBubbling";
@@ -30,7 +31,7 @@ const initialData = [
 ];
 const Fundamentals = () => {
   return (
-    <>
+    <div>
       {/* <EventBubbling />
       <Count />
       <GenericComponents />
@@ -48,8 +49,9 @@ const Fundamentals = () => {
       {/* <Home /> */}
       {/* <MiniMovieApp /> */}
       {/* <TasksManagement /> */}
-      <MusicPlayer />
-    </>
+      {/* <MusicPlayer /> */}
+      <TaskManagement />
+    </div>
   );
 };
 
