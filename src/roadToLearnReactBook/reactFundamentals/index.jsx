@@ -7,6 +7,8 @@ import {
 } from "./HOCs/codeReusability";
 import { Auth } from "./HOCs/crossCuttingConcerns";
 import TaskManagement from "./advancedTaskManagement";
+import AuthComponent from "./advancedTaskManagement/withAuth";
+import WithAuth from "./advancedTaskManagement/withAuth";
 // import Table from "./advancedState/table";
 import Count from "./count";
 import EventBubbling from "./eventBubbling";
@@ -50,7 +52,7 @@ const Fundamentals = () => {
       {/* <MiniMovieApp /> */}
       {/* <TasksManagement /> */}
       {/* <MusicPlayer /> */}
-      <TaskManagement />
+      <AuthComponent />
     </div>
   );
 };
