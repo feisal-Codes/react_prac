@@ -11,8 +11,8 @@ const getUrl = (query) => {
   return url;
 };
 
-const TaskManagement = ({ login }) => {
-  console.log("this is the user logged in", login);
+const TaskManagement = ({ userId }) => {
+  console.log("this is the user logged in", userId);
   const [formFields, setFormFields] = useState({
     title: "",
     description: "",
@@ -25,7 +25,7 @@ const TaskManagement = ({ login }) => {
   const handleAddTask = (task) => {
     if (!isEditing) {
       console.log("and here");
-      setTasks((prev) => [{ id: uuidv4(), ...task }, ...prev]);
+      setTasks((prev) => [{ userId: userId, id: uuidv4(), ...task }, ...prev]);
     } else {
       //transform tasks and modify the given task
       //set the updated tasks back to the task state
@@ -42,7 +42,9 @@ const TaskManagement = ({ login }) => {
       dueDate: "",
     }));
   };
-
+  console.log("this are tasks");
+  console.log(tasks);
+  console.log("****************8");
   const handleDeleteTask = (taskId) => {
     let updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(() => updatedTasks);
@@ -56,6 +58,9 @@ const TaskManagement = ({ login }) => {
   };
 
   const handleEdit = (task) => {
+    if (userId !== task.userId) {
+      return;
+    }
     setIsEditing(true);
     setFormFields(() => ({
       ...task,

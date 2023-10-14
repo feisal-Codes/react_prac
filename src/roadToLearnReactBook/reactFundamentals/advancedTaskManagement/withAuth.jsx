@@ -31,7 +31,7 @@ const withAuth = (WrappedComponent) => {
       );
     }
 
-    return <WrappedComponent login={login} />;
+    return <WrappedComponent userId={login} />;
   };
 };
 
