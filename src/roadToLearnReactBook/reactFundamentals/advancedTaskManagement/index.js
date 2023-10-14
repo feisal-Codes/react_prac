@@ -5,8 +5,6 @@ import CreateTask from "./createTask";
 import TaskList from "./TaskList";
 import sortBy from "./helpers/sortBy";
 
-const BASE_API_URL = "https://jsonplaceholder.typicode.com/";
-
 const TaskManagement = ({ userId, initialData }) => {
   console.log("this is the user logged in", userId);
   const [formFields, setFormFields] = useState({
