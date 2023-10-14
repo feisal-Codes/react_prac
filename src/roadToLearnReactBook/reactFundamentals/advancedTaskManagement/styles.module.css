@@ -110,3 +110,7 @@ body {
     display: flex;
     align-items: center;
 }
+
+.ml5 {
+    margin-left: 5px;
+}

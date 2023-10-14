@@ -3,6 +3,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import Select from "./formComponents/select";
 import { users } from "./data";
 import TaskManagement from "./index";
+import { tasks } from "./data";
 
 const withAuth = (WrappedComponent) => {
   return () => {
@@ -31,7 +32,7 @@ const withAuth = (WrappedComponent) => {
       );
     }
 
-    return <WrappedComponent userId={login} />;
+    return <WrappedComponent userId={login} initialData={tasks} />;
   };
 };
 

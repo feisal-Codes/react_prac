@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import styles from "./styles.module.css";
 import CreateTask from "./createTask";
 import TaskList from "./TaskList";
+import sortBy from "./helpers/sortBy";
 
 const BASE_API_URL = "https://jsonplaceholder.typicode.com/";
 
@@ -11,7 +12,7 @@ const getUrl = (query) => {
   return url;
 };
 
-const TaskManagement = ({ userId }) => {
+const TaskManagement = ({ userId, initialData }) => {
   console.log("this is the user logged in", userId);
   const [formFields, setFormFields] = useState({
     title: "",
@@ -19,8 +20,11 @@ const TaskManagement = ({ userId }) => {
     dueDate: "",
   });
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
+  const [filters, setFilters] = useState({
+    sort: { key: "NONE", order: "asc" },
+  });
 
   const handleAddTask = (task) => {
     if (!isEditing) {
@@ -57,6 +61,37 @@ const TaskManagement = ({ userId }) => {
     });
   };
 
+  const handleSetFilters = (sortKey) => {
+    console.log(sortKey);
+    if (filters.sort.key === sortKey) {
+      let newOrder = filters.sort.order === "asc" ? "desc" : "asc";
+      setFilters((prev) => ({
+        ...prev,
+        sort: { key: sortKey, order: newOrder },
+      }));
+    } else {
+      setFilters((prev) => ({
+        ...prev,
+        sort: { key: sortKey, order: "asc" },
+      }));
+    }
+  };
+
+  useEffect(() => {
+    let updatedList = [...tasks];
+
+    console.log(updatedList);
+    let {
+      sort: { key, order },
+    } = filters;
+    if (key !== "NONE") {
+      console.log("we are here");
+      updatedList = sortBy([...updatedList], key, order);
+    }
+    console.log("updated list in sort", updatedList);
+    setTasks(updatedList);
+  }, [filters.sort]);
+
   const handleEdit = (task) => {
     if (userId !== task.userId) {
       return;
@@ -79,9 +114,12 @@ const TaskManagement = ({ userId }) => {
       </div>
       <div className={styles.listSection}>
         <TaskList
+          onSetSort={handleSetFilters}
           tasks={tasks}
           onRemoveTask={handleDeleteTask}
           onEdit={handleEdit}
+          userId={userId}
+          sort={filters.sort}
         />
       </div>
     </div>
