@@ -7,11 +7,6 @@ import sortBy from "./helpers/sortBy";
 
 const BASE_API_URL = "https://jsonplaceholder.typicode.com/";
 
-const getUrl = (query) => {
-  let url = `${BASE_API_URL}${query} `;
-  return url;
-};
-
 const TaskManagement = ({ userId, initialData }) => {
   console.log("this is the user logged in", userId);
   const [formFields, setFormFields] = useState({
