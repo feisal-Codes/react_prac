@@ -11,6 +11,7 @@ import AuthComponent from "./advancedTaskManagement/withAuth";
 import WithAuth from "./advancedTaskManagement/withAuth";
 // import Table from "./advancedState/table";
 import Count from "./count";
+import DynamicForm from "./dynamicFormBuilder";
 import EventBubbling from "./eventBubbling";
 import GenericComponents from "./genericComponents";
 import HackerStories from "./hackerStrories";
@@ -52,7 +53,8 @@ const Fundamentals = () => {
       {/* <MiniMovieApp /> */}
       {/* <TasksManagement /> */}
       {/* <MusicPlayer /> */}
-      <AuthComponent />
+      {/* <AuthComponent /> */}
+      <DynamicForm />
     </div>
   );
 };

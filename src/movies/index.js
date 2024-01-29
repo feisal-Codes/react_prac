@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 const Movies = ({ movies }) => {
   const [releaseYear] = useState(
     movies
@@ -31,6 +32,7 @@ const Movies = ({ movies }) => {
           (!filters.genre.length || filters.genre.includes(movie.genre))
         );
       });
+      console.log(filtered);
       setFilteredMovies(filtered);
     } else {
       setFilteredMovies(movies);
@@ -62,18 +64,10 @@ const Movies = ({ movies }) => {
     let { name, value } = e.target;
     setSearchTerm((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(searchTerm);
-  const applySearch = (e) => {
+
+  const applySearch = () => {
     if (searchTerm.genre || searchTerm.title || searchTerm.releaseYear) {
       let searchedMovies = [...movies].filter((movie) => {
-        console.log("needed");
-        console.log(filteredMovies);
-        console.log(searchTerm.title.toLowerCase());
-        console.log(movie.title?.toLowerCase());
-        console.log(
-          movie.title?.toLowerCase() === searchTerm.title?.toLowerCase()
-        );
-
         let isTitleMatch =
           searchTerm.title === "" ||
           movie.title
@@ -93,75 +87,164 @@ const Movies = ({ movies }) => {
     }
   };
 
+  const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+
+  const sectionStyle = {
+    marginBottom: "20px",
+    width: "100%",
+    maxWidth: "75%",
+  };
+
+  const headingStyle = {
+    marginBottom: "10px",
+    fontSize: "1.5rem",
+  };
+
+  const inputStyle = {
+    padding: "8px",
+    width: "100%",
+    marginBottom: "10px",
+  };
+
+  const selectStyle = {
+    padding: "8px",
+    width: "100%",
+    maxWidth: "48%",
+    marginBottom: "10px",
+  };
+
+  const checkboxStyle = {
+    marginRight: "10px",
+  };
+
+  const genreContainerStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "10px",
+  };
+
+  const genreItemStyle = {
+    marginBottom: "5px",
+    display: "flex",
+    alignItems: "center",
+  };
+
+  const movieCardContainerStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "20px",
+    justifyContent: "center",
+  };
+
+  const movieCardStyle = {
+    width: "200px", // Set your preferred width
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  };
+
   return (
-    <>
-      <div>
-        <h2>Search for movie</h2>
+    <div style={containerStyle}>
+      <div style={sectionStyle}>
+        <h2 style={headingStyle}>Search for movie</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <input
             value={searchTerm.title}
             onChange={handleSearch}
             type="text"
             name="title"
-            placeholder="search by title"
+            placeholder="Search by title"
+            style={inputStyle}
           />
           <input
             type="text"
             name="releaseYear"
             value={searchTerm.releaseYear}
             onChange={handleSearch}
-            placeholder="search by release year"
+            placeholder="Search by release year"
+            style={inputStyle}
           />
           <input
             value={searchTerm.genre}
             onChange={handleSearch}
             type="text"
             name="genre"
-            placeholder="search by genre"
+            placeholder="Search by genre"
+            style={inputStyle}
           />
         </div>
       </div>
-      <div>
-        <h2>Filters Based On:</h2>
-        <h4>release year</h4>
-        <select name="year" value={filters.year} onChange={handleChange}>
-          <option value="">Select Year</option>
-          {releaseYear.map((year, idx) => (
-            <option value={year} key={idx}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <h4>Genre</h4>
-        {genre &&
-          genre?.map((title, _idx) => (
-            <div key={_idx}>
-              <label htmlFor={title}>{title}</label>
-              <input
-                type="checkbox"
-                onChange={handleChange}
-                name={title}
-                value={filters.genre}
-                id={title}
-              />
+      <div style={sectionStyle}>
+        <h2 style={headingStyle}>Filters Based On:</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ marginBottom: "10px" }}>
+            <h4 style={{ fontSize: "1.25rem", marginBottom: "5px" }}>
+              Release Year
+            </h4>
+            <select
+              name="year"
+              value={filters.year}
+              onChange={handleChange}
+              style={selectStyle}
+            >
+              <option value="">Select Year</option>
+              {releaseYear.map((year, idx) => (
+                <option value={year} key={idx}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <h4 style={{ fontSize: "1.25rem", marginBottom: "5px" }}>Genre</h4>
+            <div style={genreContainerStyle}>
+              {genre &&
+                genre?.map((title, _idx) => (
+                  <div key={_idx} style={genreItemStyle}>
+                    <label htmlFor={title} style={{ marginRight: "5px" }}>
+                      {title}
+                    </label>
+                    <input
+                      type="checkbox"
+                      onChange={handleChange}
+                      name={title}
+                      value={filters.genre}
+                      id={title}
+                      style={checkboxStyle}
+                    />
+                  </div>
+                ))}
             </div>
-          ))}
+          </div>
+        </div>
       </div>
-      <div>
-        <h2>Available Movies</h2>
-
+      <div style={movieCardContainerStyle}>
         {filteredMovies?.map((movie) => (
-          <div key={movie.id}>
-            <h3>{movie.title}</h3>
+          <div key={movie.id} style={movieCardStyle}>
+            <h3
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                marginBottom: "5px",
+              }}
+            >
+              {movie.title}
+            </h3>
             <p>{movie.genre}</p>
             <p>{movie.releaseYear}</p>
             <p>{movie.rating}</p>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

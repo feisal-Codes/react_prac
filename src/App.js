@@ -111,13 +111,13 @@ import Fundamentals from "./roadToLearnReactBook/reactFundamentals";
 function App() {
   return (
     <>
-      {/* <RecipeManagement data={recipes} />
-      <MultiStepForms />
-      <Movies movies={movies} />
+       <RecipeManagement data={recipes} />
+      {/*<MultiStepForms />
       <UserManagement users={users} />
       <Books data={booksData} /> */}
       {/* <Form /> */}
-      <Fundamentals />
+      {/* <Fundamentals /> */}
+      {/* <Movies movies={movies} /> */}
     </>
   );
 }

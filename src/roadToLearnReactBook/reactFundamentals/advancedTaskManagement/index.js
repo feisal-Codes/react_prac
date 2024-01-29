@@ -39,9 +39,7 @@ const TaskManagement = ({ userId, initialData }) => {
       dueDate: "",
     }));
   };
-  console.log("this are tasks");
-  console.log(tasks);
-  console.log("****************8");
+ 
   const handleDeleteTask = (taskId) => {
     let updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(() => updatedTasks);
@@ -77,6 +75,7 @@ const TaskManagement = ({ userId, initialData }) => {
     let {
       sort: { key, order },
     } = filters;
+    
     if (key !== "NONE") {
       console.log("we are here");
       updatedList = sortBy([...updatedList], key, order);
