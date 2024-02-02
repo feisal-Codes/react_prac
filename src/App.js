@@ -1,7 +1,7 @@
 // import "./styles.css";
 import { useState } from "react";
 import { tasks, recipes, movies, users, booksData } from "./data";
-import "./styles.css"
+// import "./styles.css"
 
 // //kanban board
 // //input -> [backlog,todo,inprogress,done]
@@ -14,7 +14,7 @@ import Shop from "./shop";
 import { Route, Routes } from "react-router-dom";
 import Cart from "./shop/cart";
 import { products } from "./data";
-// import DisplayWeather from "./weather/weather";
+import DisplayWeather from "./weather/weather";
 
 import TaskList from "./task/task";
 import RecipeManagement from "./recipes/recipe";
@@ -111,8 +111,7 @@ export default function App() {
 // function App() {
 //   return (
 //     <>
-//        // <RecipeManagement data={recipes} />
-//     <Shop/>
+//        <RecipeManagement data={recipes} />
 //       {/*<MultiStepForms />
 //       <UserManagement users={users} />
 //       <Books data={booksData} /> */}
