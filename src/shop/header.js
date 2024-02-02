@@ -27,9 +27,12 @@ const Header = () => {
           position: isHeaderFixed ? "fixed" : "relative",
           top: 0,
           width: "100%",
-          backgroundColor: "white",
+          backgroundColor: "white", // Set background color to white
           padding: "10px 0",
-          boxShadow: isHeaderFixed ? "0 4px 6px -1px rgba(0, 0, 0, 0.1)" : "none",
+          boxShadow: isHeaderFixed
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+            : "none",
+          zIndex: 1000, // Set a higher z-index value
         }}
       >
         <h4 style={{ marginRight: "10px" }}>
