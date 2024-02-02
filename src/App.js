@@ -1,7 +1,7 @@
 // import "./styles.css";
 import { useState } from "react";
 import { tasks, recipes, movies, users, booksData } from "./data";
-// import "./styles.css"
+import "./styles.css"
 
 // //kanban board
 // //input -> [backlog,todo,inprogress,done]
@@ -9,11 +9,11 @@ import { tasks, recipes, movies, users, booksData } from "./data";
 // //[[1,2,3,4,5,6],[],[],[]]
 // import Assembly from "./kanban";
 // import Task from "./task";
-// import Products from "./shop/products";
+import Products from "./shop/products";
 import Shop from "./shop";
-// import { Route, Routes } from "react-router-dom";
-// import Cart from "./shop/cart";
-// import { products } from "./data";
+import { Route, Routes } from "react-router-dom";
+import Cart from "./shop/cart";
+import { products } from "./data";
 // import DisplayWeather from "./weather/weather";
 
 import TaskList from "./task/task";
@@ -35,35 +35,35 @@ import Fundamentals from "./roadToLearnReactBook/reactFundamentals";
 // ];
 // const list = ["backlog", "todo", "progress", "done"];
 
-// export default function App() {
-//   const [cart, setCart] = useState([]);
+export default function App() {
+  const [cart, setCart] = useState([]);
 
-//   const handleClick = (product) => {
-//     const existingItem = cart.find((item) => item.id === product.id);
+  const handleClick = (product) => {
+    const existingItem = cart.find((item) => item.id === product.id);
 
-//     if (existingItem) {
-//       let updatedState = cart.map((prev) => {
-//         if (prev.id === product.id) {
-//           return { ...product, quantity: prev.quantity + 1 };
-//         }
-//         return prev;
-//       });
-//       setCart(updatedState);
-//     } else {
-//       setCart([...cart, { ...product, quantity: 1 }]);
-//     }
-//     // console.log(cart);
-//   };
-//   return (
-//     <>
-//       <Routes>
-//         <Route exact path="/" element={<Shop handleClick={handleClick} />} />
-//         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
-//         <Route path="weather" element={<DisplayWeather />} />
-//       </Routes>
-//     </>
-//   );
-// }
+    if (existingItem) {
+      let updatedState = cart.map((prev) => {
+        if (prev.id === product.id) {
+          return { ...product, quantity: prev.quantity + 1 };
+        }
+        return prev;
+      });
+      setCart(updatedState);
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+    // console.log(cart);
+  };
+  return (
+    <>
+      <Routes>
+        <Route exact path="/" element={<Shop handleClick={handleClick} />} />
+        <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+        <Route path="weather" element={<DisplayWeather />} />
+      </Routes>
+    </>
+  );
+}
 // function App() {
 // const [initialState, setInitialState] = useState({ tasks });
 // const toggleCompletionStatus = (taskId) => {
@@ -108,18 +108,18 @@ import Fundamentals from "./roadToLearnReactBook/reactFundamentals";
 //   </div>
 // );
 
-function App() {
-  return (
-    <>
-       // <RecipeManagement data={recipes} />
-    <Shop/>
-      {/*<MultiStepForms />
-      <UserManagement users={users} />
-      <Books data={booksData} /> */}
-      {/* <Form /> */}
-      {/* <Fundamentals /> */}
-      {/* <Movies movies={movies} /> */}
-    </>
-  );
-}
+// function App() {
+//   return (
+//     <>
+//        // <RecipeManagement data={recipes} />
+//     <Shop/>
+//       {/*<MultiStepForms />
+//       <UserManagement users={users} />
+//       <Books data={booksData} /> */}
+//       {/* <Form /> */}
+//       {/* <Fundamentals /> */}
+//       {/* <Movies movies={movies} /> */}
+//     </>
+//   );
+// }
 export default App;
