@@ -10,7 +10,7 @@ import { tasks, recipes, movies, users, booksData } from "./data";
 // import Assembly from "./kanban";
 // import Task from "./task";
 // import Products from "./shop/products";
-// import Shop from "./shop";
+import Shop from "./shop";
 // import { Route, Routes } from "react-router-dom";
 // import Cart from "./shop/cart";
 // import { products } from "./data";
@@ -111,7 +111,8 @@ import Fundamentals from "./roadToLearnReactBook/reactFundamentals";
 function App() {
   return (
     <>
-       <RecipeManagement data={recipes} />
+       // <RecipeManagement data={recipes} />
+    <Shop/>
       {/*<MultiStepForms />
       <UserManagement users={users} />
       <Books data={booksData} /> */}
