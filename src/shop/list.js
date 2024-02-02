@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 const List = ({ data, handleAddToCart }) => {
-  const [showAlert, setShowAlert] = useState(false);
+  const [alertProduct, setAlertProduct] = useState(null);
 
   const handleAddToCartClick = (product) => {
     handleAddToCart(product);
-    setShowAlert(true);
+    setAlertProduct(product);
 
     // Auto dismiss the alert after 3 seconds (adjust as needed)
     setTimeout(() => {
-      setShowAlert(false);
+      setAlertProduct(null);
     }, 3000);
   };
 
@@ -30,7 +30,7 @@ const List = ({ data, handleAddToCart }) => {
               position: "relative",
             }}
           >
-            {showAlert && (
+            {alertProduct && alertProduct.id === product.id && (
               <div
                 style={{
                   position: "absolute",
